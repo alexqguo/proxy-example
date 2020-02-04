@@ -204,7 +204,7 @@ const baseApi = {
 }; // Can prefill functions here if you want
 const apiCaller = new Proxy(baseApi, {
   get: function(target, prop) {
-    if (target[prop]) return target[prop]; // Reeturn prefilled function if it existss
+    if (target[prop]) return target[prop]; // Reeturn prefilled function if it exists
 
     const requestMethod = methods.find(method => prop.startsWith(method));
     if (!requestMethod) return; // or throw?
