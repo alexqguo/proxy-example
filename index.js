@@ -38,6 +38,7 @@
         }
       }
     }
+    return arr;
   };
   const insertionSort = arr => {
     for (let i = 1; i < arr.length; i++) {
@@ -175,7 +176,6 @@
   };
 
   const visualizeSort = async () => {
-    console.log(vizData);
     const vizContainer = document.querySelector('#viz');
 
     for (let i = 0; i < vizData.events.length; i++) {
