@@ -1,5 +1,5 @@
 (function() {
-  const MAX = 50;
+  const MAX = 100;
   const EVENTS = Object.freeze({
     check: 'check',
     set: 'set'
@@ -7,9 +7,9 @@
 
   // Random utils
   const getRandomInt = () => Math.floor(Math.random() * MAX);
-  const generateBaseArray = (length = 20) =>
+  const generateBaseArray = (length = 30) =>
     [...Array(length)].map(getRandomInt);
-  const wait = (time = 25) =>
+  const wait = (time = 15) =>
     new Promise(resolve => {
       setTimeout(resolve, time);
     });
