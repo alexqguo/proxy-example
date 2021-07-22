@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    body {
+      font-family: Lato;
+      margin: 50px;
+      padding: 0;
+      background: black;
+      color: white;
+    }
+
+    section div {
+      margin-bottom: 20px;
+    }
+
+    #base-array {
+      font-family: Courier, monospace;
+    }
+
+    #viz div {
+      display: inline-block;
+      width: 20px;
+      background: white;
+      border: 1px solid gray;
+    }
+
+    #viz div.check {
+      background: green;
+    }
+
+    #viz div.set {
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Sorting Viz</h1>
+  <section>
+    <div>
+      Base array: <span id="base-array"></span>
+    </div>
+    <div>
+      <button data-sort="bubble">Bubble Sort</button>
+      <button data-sort="native">arr.sort()</button>
+    </div>
+  </section>
+
+  <div id="viz"></div>
+</body>
+
+</html>
