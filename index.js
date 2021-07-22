@@ -1,7 +1,4 @@
 (function() {
-  let vizData;
-  let vizArray;
-
   const MAX = 50;
   const EVENTS = Object.freeze({
     check: 'check',
@@ -9,17 +6,9 @@
   });
 
   // Random utils
-  const getDivHeight = height => `${height * 4}px`;
   const getRandomInt = () => Math.floor(Math.random() * MAX);
-  const generateBaseArray = (length = 20) => {
-    const array = [];
-
-    for (let i = 0; i < length; i++) {
-      array.push(getRandomInt());
-    }
-
-    return array;
-  };
+  const generateBaseArray = (length = 20) =>
+    [...Array(length)].map(getRandomInt);
   const wait = (time = 25) =>
     new Promise(resolve => {
       setTimeout(resolve, time);
@@ -122,7 +111,6 @@
     }
     return arr;
   };
-
   const shellSort = arr => {
     let n = arr.length;
 
@@ -179,6 +167,7 @@
   };
 
   // DOM utils
+  const getDivHeight = height => `${height * 4}px`;
   const addVizToDOM = arr => {
     const frag = document.createDocumentFragment();
     const vizContainer = document.querySelector('#viz');
@@ -194,7 +183,7 @@
     vizContainer.appendChild(frag);
   };
 
-  const visualizeSort = async () => {
+  const visualizeSort = async vizData => {
     const vizContainer = document.querySelector('#viz');
 
     for (let i = 0; i < vizData.events.length; i++) {
@@ -218,13 +207,15 @@
   document.querySelector('#base-array').innerHTML = JSON.stringify(baseArray);
 
   const buildFreshProxy = () => {
-    vizArray = [...baseArray];
-    vizData = withVisualization(baseArray);
-    addVizToDOM(vizArray, vizData);
+    const vizData = withVisualization(baseArray);
+    addVizToDOM(baseArray, vizData);
+
+    return vizData;
   };
 
-  const buildSortEventHandler = btn => () => {
-    buildFreshProxy();
+  const buildSortEventHandler = btn => async () => {
+    document.querySelectorAll('button').forEach(btn => (btn.disabled = true));
+    const vizData = buildFreshProxy();
     const sortType = btn.dataset.sort;
 
     switch (sortType) {
@@ -243,7 +234,10 @@
       case 'native':
         vizData.proxy.sort((a, b) => a - b);
       default:
-        visualizeSort();
+        await visualizeSort(vizData);
+        document
+          .querySelectorAll('button')
+          .forEach(btn => (btn.disabled = false));
     }
   };
 
