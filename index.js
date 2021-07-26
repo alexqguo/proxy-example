@@ -7,9 +7,9 @@
 
   // Random utils
   const getRandomInt = () => Math.floor(Math.random() * MAX);
-  const generateBaseArray = (length = 30) =>
+  const generateBaseArray = (length = 80) =>
     [...Array(length)].map(getRandomInt);
-  const wait = (time = 15) =>
+  const wait = (time = 0) =>
     new Promise(resolve => {
       setTimeout(resolve, time);
     });
@@ -27,7 +27,41 @@
         }
       }
     }
-    // return arr;
+    return arr;
+  };
+  const cocktailSort = arr => {
+    let start = 0,
+      end = arr.length,
+      swapped = true;
+
+    while (swapped) {
+      swapped = false;
+      for (let i = start; i < end - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+          let temp = arr[i];
+          arr[i] = arr[i + 1];
+          arr[i + 1] = temp;
+          swapped = true;
+        }
+      }
+
+      end--;
+      if (!swapped) break;
+
+      swapped = false;
+      for (let i = end - 1; i > start; i--) {
+        if (arr[i - 1] > arr[i]) {
+          let temp = arr[i];
+          arr[i] = arr[i - 1];
+          arr[i - 1] = temp;
+          swapped = true;
+        }
+      }
+
+      start++;
+    }
+
+    return arr;
   };
   const insertionSort = arr => {
     for (let i = 1; i < arr.length; i++) {
@@ -129,6 +163,36 @@
 
     return arr;
   };
+  const heapSort = array => {
+    let size = array.length;
+
+    for (let i = Math.floor(size / 2 - 1); i >= 0; i--) heapify(array, size, i);
+
+    for (let i = size - 1; i >= 0; i--) {
+      let temp = array[0];
+      array[0] = array[i];
+      array[i] = temp;
+
+      heapify(array, i, 0);
+    }
+    return array;
+  };
+  const heapify = (array, size, i) => {
+    let max = i;
+    let left = 2 * i + 1;
+    let right = 2 * i + 2;
+
+    if (left < size && array[left] > array[max]) max = left;
+    if (right < size && array[right] > array[max]) max = right;
+
+    if (max != i) {
+      let temp = array[i];
+      array[i] = array[max];
+      array[max] = temp;
+
+      heapify(array, size, max);
+    }
+  };
   ////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////
 
@@ -205,7 +269,6 @@
 
   // Generate base array
   const baseArray = generateBaseArray();
-  document.querySelector('#base-array').innerHTML = JSON.stringify(baseArray);
 
   const buildFreshProxy = () => {
     const vizData = withVisualization(baseArray);
@@ -223,20 +286,26 @@
       case 'bubble':
         bubbleSort(vizData.proxy);
         break;
+      case 'cocktail':
+        cocktailSort(vizData.proxy);
+        break;
       case 'insertion':
         insertionSort(vizData.proxy);
         break;
       case 'selection':
         selectionSort(vizData.proxy);
         break;
+      case 'shell':
+        shellSort(vizData.proxy);
+        break;
       case 'merge':
         mergeSort(vizData.proxy);
         break;
+      case 'heap':
+        heapSort(vizData.proxy);
+        break;
       case 'quick':
         quickSort(vizData.proxy);
-        break;
-      case 'shell':
-        shellSort(vizData.proxy);
         break;
       case 'native':
         vizData.proxy.sort((a, b) => a - b);
