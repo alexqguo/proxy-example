@@ -1,4 +1,5 @@
 (function() {
+  const audioContext = new AudioContext();
   const MAX = 100;
   const EVENTS = Object.freeze({
     check: 'check',
@@ -13,6 +14,16 @@
     new Promise(resolve => {
       setTimeout(resolve, time);
     });
+  const playSound = value => {
+    const o = audioContext.createOscillator();
+    const g = audioContext.createGain();
+    o.type = 'sine';
+    o.connect(g);
+    o.frequency.value = value * 10;
+    g.connect(audioContext.destination);
+    o.start(0);
+    g.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 1);
+  };
 
   ////////////////////////////////////////////////////////////
   // Sorts, mostly taken from https://medium.com/@rajat_m/implement-5-sorting-algorithms-using-javascript-63c5a917e811
@@ -250,6 +261,7 @@
 
   const visualizeSort = async vizData => {
     const vizContainer = document.querySelector('#viz');
+    const soundInput = document.querySelector('#sound');
 
     for (let i = 0; i < vizData.events.length; i++) {
       const event = vizData.events[i];
@@ -260,6 +272,7 @@
       } else if (event.type === EVENTS.set) {
         vizItem.classList.add(EVENTS.set);
         vizItem.style.height = getDivHeight(event.value);
+        soundInput.checked && playSound(event.value);
       }
 
       await wait();
