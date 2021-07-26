@@ -27,7 +27,7 @@
         }
       }
     }
-    return arr;
+    // return arr;
   };
   const insertionSort = arr => {
     for (let i = 1; i < arr.length; i++) {
@@ -136,7 +136,8 @@
   const withVisualization = arr => {
     // Shallow clone array to prevent modification on the original
     const events = [];
-    const proxy = new Proxy([...arr], {
+    const clone = [...arr];
+    const proxy = new Proxy(clone, {
       get: (obj, key) => {
         const isValidArrayIndex = !isNaN(Number(key));
 
@@ -221,24 +222,30 @@
     switch (sortType) {
       case 'bubble':
         bubbleSort(vizData.proxy);
+        break;
       case 'insertion':
         insertionSort(vizData.proxy);
+        break;
       case 'selection':
         selectionSort(vizData.proxy);
+        break;
       case 'merge':
         mergeSort(vizData.proxy);
+        break;
       case 'quick':
         quickSort(vizData.proxy);
+        break;
       case 'shell':
         shellSort(vizData.proxy);
+        break;
       case 'native':
         vizData.proxy.sort((a, b) => a - b);
-      default:
-        await visualizeSort(vizData);
-        document
-          .querySelectorAll('button')
-          .forEach(btn => (btn.disabled = false));
+        break;
     }
+
+    console.log(vizData);
+    await visualizeSort(vizData);
+    document.querySelectorAll('button').forEach(btn => (btn.disabled = false));
   };
 
   // Show the initial array
