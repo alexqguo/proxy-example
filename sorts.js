@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////
 // Sorts, mostly taken from https://medium.com/@rajat_m/implement-5-sorting-algorithms-using-javascript-63c5a917e811
+// or other random posts
 ////////////////////////////////////////////////////////////
 export const bubbleSort = arr => {
   for (let i = 0; i < arr.length; i++) {
