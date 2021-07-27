@@ -1,4 +1,7 @@
 const audioContext = new AudioContext();
+const wow = new Audio(
+  'https://www.soundboard.com/mediafiles/24/242810-970c4842-1fa1-40d4-9a79-346d93cbb375.mp3'
+);
 
 export const playSound = value => {
   const o = audioContext.createOscillator();
@@ -12,7 +15,5 @@ export const playSound = value => {
 };
 
 export const playWow = () => {
-  new Audio(
-    'https://www.soundboard.com/mediafiles/24/242810-970c4842-1fa1-40d4-9a79-346d93cbb375.mp3'
-  ).play();
+  wow.play();
 };
