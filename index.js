@@ -40,6 +40,12 @@ const resetDOM = arr => {
   vizContainer.appendChild(frag);
 };
 
+/**
+ * Could use requestAnimationFrame here instead of a straight for loop for more stable/predictable animation,
+ * but 60fps is too slow. Doing it this way is probably more CPU bound but that's fine for now. If you enable
+ * CPU throttling in dev tools, you can notice a slowdown.
+ * Setting wait time above to 16.67 will give the same thing as a RAF 60fps.
+ */
 const visualizeSort = async events => {
   const vizContainer = document.querySelector('#viz');
   const soundInput = document.querySelector('#sound');
