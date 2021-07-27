@@ -1,5 +1,6 @@
 import {
   heapSort,
+  gnomeSort,
   mergeSort,
   quickSort,
   shellSort,
@@ -90,6 +91,9 @@ const buildSortEventHandler = btn => async () => {
       break;
     case 'shell':
       shellSort(vizArray);
+      break;
+    case 'gnome':
+      gnomeSort(vizArray);
       break;
     case 'merge':
       mergeSort(vizArray);
