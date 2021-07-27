@@ -61,8 +61,9 @@ const visualizeSort = async events => {
   }
 };
 
-// Generate base array
+// Generate base array and display it
 const baseArray = generateBaseArray();
+resetDOM(baseArray);
 
 const buildFreshProxy = () => {
   const vizArray = withVisualization(baseArray);
@@ -116,9 +117,6 @@ const buildSortEventHandler = btn => async () => {
   playWow();
   document.querySelectorAll('button').forEach(btn => (btn.disabled = false));
 };
-
-// Show the initial array
-buildFreshProxy(baseArray);
 
 // Bind button event handlers
 document.querySelectorAll('button').forEach(btn => {
