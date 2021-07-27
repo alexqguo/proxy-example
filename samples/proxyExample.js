@@ -90,7 +90,6 @@ const withAccessHistory = obj => {
       return target[prop];
     }
   });
-  return obj;
 };
 
 const obj = withAccessHistory({
@@ -253,3 +252,28 @@ const apiCaller = new Proxy(baseApi, {
 // apiCaller.postCampaigns({ campaignName: 'name', budget: 3.5 });
 // apiCaller.getCampaigns$AdGroups('123CampaignId123')
 // apiCaller.getCampaigns$AdGruops$Keywords('123CampaignId123', '456AdGroupId456')
+
+/////////////////////////////////////////////////////////
+
+/* DOM updates */
+const myObject = {
+  name: 'Alex',
+  occupation: 'Web developer',
+  get text() {
+    return `${this.name}'s occupation is ${this.occupation}.`;
+  }
+};
+
+const withDOMUpdates = (obj, domSelector) => {
+  document.querySelector(domSelector).innerHTML = obj.text;
+
+  return new Proxy(obj, {
+    set: (obj, prop, value) => {
+      obj[prop] = value;
+      document.querySelector(domSelector).innerHTML = obj.text;
+      return true;
+    }
+  });
+};
+
+const wrappedObj = withDOMUpdates(myObject, '#asdf');
