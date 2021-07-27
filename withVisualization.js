@@ -4,7 +4,9 @@ export const withVisualization = arr => {
   // Shallow clone array to prevent modification on the original
   const events = [];
   const clone = [...arr];
-  const proxy = new Proxy(clone, {
+  clone.__getEvents = () => events;
+
+  return new Proxy(clone, {
     get: (obj, key) => {
       const isValidArrayIndex = !isNaN(Number(key));
 
@@ -27,11 +29,6 @@ export const withVisualization = arr => {
       return true;
     }
   });
-
-  return {
-    proxy,
-    events
-  };
 };
 
 export default withVisualization;

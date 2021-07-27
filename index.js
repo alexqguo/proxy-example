@@ -24,7 +24,7 @@ const wait = (time = 0) =>
 
 // DOM utils
 const getDivHeight = height => `${height * 4}px`;
-const addVizToDOM = arr => {
+const resetDOM = arr => {
   const frag = document.createDocumentFragment();
   const vizContainer = document.querySelector('#viz');
 
@@ -39,12 +39,12 @@ const addVizToDOM = arr => {
   vizContainer.appendChild(frag);
 };
 
-const visualizeSort = async vizData => {
+const visualizeSort = async events => {
   const vizContainer = document.querySelector('#viz');
   const soundInput = document.querySelector('#sound');
 
-  for (let i = 0; i < vizData.events.length; i++) {
-    const event = vizData.events[i];
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i];
     const vizItem = vizContainer.children[event.index];
 
     if (event.type === EVENTS.check) {
@@ -64,49 +64,51 @@ const visualizeSort = async vizData => {
 const baseArray = generateBaseArray();
 
 const buildFreshProxy = () => {
-  const vizData = withVisualization(baseArray);
-  addVizToDOM(baseArray, vizData);
+  const vizArray = withVisualization(baseArray);
+  resetDOM(baseArray);
 
-  return vizData;
+  return vizArray;
 };
 
 const buildSortEventHandler = btn => async () => {
   document.querySelectorAll('button').forEach(btn => (btn.disabled = true));
-  const vizData = buildFreshProxy();
+  const vizArray = buildFreshProxy();
   const sortType = btn.dataset.sort;
 
   switch (sortType) {
     case 'bubble':
-      bubbleSort(vizData.proxy);
+      bubbleSort(vizArray);
       break;
     case 'cocktail':
-      cocktailSort(vizData.proxy);
+      cocktailSort(vizArray);
       break;
     case 'insertion':
-      insertionSort(vizData.proxy);
+      insertionSort(vizArray);
       break;
     case 'selection':
-      selectionSort(vizData.proxy);
+      selectionSort(vizArray);
       break;
     case 'shell':
-      shellSort(vizData.proxy);
+      shellSort(vizArray);
       break;
     case 'merge':
-      mergeSort(vizData.proxy);
+      mergeSort(vizArray);
       break;
     case 'heap':
-      heapSort(vizData.proxy);
+      heapSort(vizArray);
       break;
     case 'quick':
-      quickSort(vizData.proxy);
+      quickSort(vizArray);
       break;
     case 'native':
-      vizData.proxy.sort((a, b) => a - b);
+      vizArray.sort((a, b) => a - b);
       break;
   }
 
-  console.log(vizData);
-  await visualizeSort(vizData);
+  const vizEvents = vizArray.__getEvents();
+  console.log(vizEvents);
+  await visualizeSort(vizEvents);
+
   playWow();
   document.querySelectorAll('button').forEach(btn => (btn.disabled = false));
 };
