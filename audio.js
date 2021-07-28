@@ -7,11 +7,17 @@ export const playSound = value => {
   const o = audioContext.createOscillator();
   const g = audioContext.createGain();
   o.type = 'sine';
-  o.connect(g);
   o.frequency.value = value * 10;
+
+  o.connect(g);
   g.connect(audioContext.destination);
   o.start(0);
-  g.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 1);
+  g.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.1);
+
+  // Make sure to clean up the oscillator node
+  setTimeout(() => {
+    o.stop();
+  }, 100);
 };
 
 export const playWow = () => {
