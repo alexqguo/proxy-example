@@ -7,7 +7,8 @@ import {
   bubbleSort,
   cocktailSort,
   insertionSort,
-  selectionSort
+  selectionSort,
+  mergeSortInPlace
 } from './sorts';
 import { EVENTS } from './enums';
 import { playWow, playSound } from './audio';
@@ -104,6 +105,9 @@ const buildSortEventHandler = btn => async () => {
       break;
     case 'merge':
       mergeSort(vizArray);
+      break;
+    case 'merge-inplace':
+      mergeSortInPlace(vizArray, 0, vizArray.length - 1);
       break;
     case 'heap':
       heapSort(vizArray);
