@@ -5,6 +5,7 @@ import {
   quickSort,
   shellSort,
   bubbleSort,
+  pancakeSort,
   cocktailSort,
   insertionSort,
   selectionSort,
@@ -99,6 +100,9 @@ const buildSortEventHandler = btn => async () => {
       break;
     case 'shell':
       shellSort(vizArray);
+      break;
+    case 'pancake':
+      pancakeSort(vizArray, vizArray.length);
       break;
     case 'gnome':
       gnomeSort(vizArray);

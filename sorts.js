@@ -236,3 +236,32 @@ const heapify = (array, size, i) => {
     heapify(array, size, max);
   }
 };
+
+const flip = (arr, i) => {
+  let temp,
+    start = 0;
+  while (start < i) {
+    temp = arr[start];
+    arr[start] = arr[i];
+    arr[i] = temp;
+    start++;
+    i--;
+  }
+};
+const findMax = (arr, n) => {
+  let mi, i;
+  for (mi = 0, i = 0; i < n; ++i) if (arr[i] > arr[mi]) mi = i;
+
+  return mi;
+};
+export const pancakeSort = (arr, n) => {
+  for (let curr_size = n; curr_size > 1; --curr_size) {
+    let mi = findMax(arr, curr_size);
+    if (mi != curr_size - 1) {
+      flip(arr, mi);
+      flip(arr, curr_size - 1);
+    }
+  }
+
+  return arr;
+};
